@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import type {TableItem} from "../types.ts";
 import { EditOutlined, DeleteOutlined, PlusOutlined  } from '@ant-design/icons';
-import {Button, Table, Modal} from "antd";
+import {Button, Table, Modal, Form, Input, DatePicker, InputNumber} from "antd";
 
 const TableComponent: React.FC = () => {
 
@@ -12,6 +12,10 @@ const TableComponent: React.FC = () => {
     ]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [editingItem, setEditingItem] = useState<TableItem | null>(null);
+
+    const [form] = Form.useForm();
 
 
     const columns = [
@@ -39,6 +43,7 @@ const TableComponent: React.FC = () => {
                         icon={<EditOutlined />}
                         type="text"
                         size="small"
+                        onClick={() => handleEditClick(record)}
                     />
                     <Button
                         icon={<DeleteOutlined />}
@@ -53,6 +58,8 @@ const TableComponent: React.FC = () => {
     ];
 
     const handleAddClick = () => {
+        setEditingItem(null);
+        form.resetFields();
         setIsModalOpen(true);
     };
 
@@ -62,6 +69,17 @@ const TableComponent: React.FC = () => {
 
     const handleDelete = (id: string) => {
         setData(prevData => prevData.filter(item => item.id !== id));
+    };
+
+    const handleEditClick = (record: TableItem) => {
+        console.log(record)
+        setEditingItem(record);
+        form.setFieldsValue({
+            name: record.name,
+            // date: record.date,
+            value: record.value,
+        });
+        setIsModalOpen(true);
     };
 
     return (
@@ -81,7 +99,7 @@ const TableComponent: React.FC = () => {
                 pagination={false}
             />
             <Modal
-                title="Добавить запись"
+                title={editingItem ? 'Редактировать запись' : 'Добавить запись'}
                 open={isModalOpen}
                 onCancel={handleCancel}
                 footer={[
@@ -93,7 +111,34 @@ const TableComponent: React.FC = () => {
                     </Button>,
                 ]}
             >
+                <Form
+                    form={form}
+                    layout="vertical"
+                >
+                    <Form.Item
+                        label="Имя"
+                        name="name"
+                        rules={[{ required: true, message: 'Введите имя' }]}
+                    >
+                        <Input placeholder="Введите имя" />
+                    </Form.Item>
 
+                    <Form.Item
+                        label="Дата"
+                        name="date"
+                        rules={[{ required: true, message: 'Выберите дату' }]}
+                    >
+                        <DatePicker style={{ width: '100%' }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Значение"
+                        name="value"
+                        rules={[{ required: true, message: 'Введите число' }]}
+                    >
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+                </Form>
             </Modal>
         </div>
     );
