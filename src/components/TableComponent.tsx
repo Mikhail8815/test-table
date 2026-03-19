@@ -5,7 +5,7 @@ import {Button, Table, Modal} from "antd";
 
 const TableComponent: React.FC = () => {
 
-    const [data] = useState<TableItem[]>([
+    const [data, setData] = useState<TableItem[]>([
         { id: '1', name: 'Михаил Горленко', date: '2023-12-27', value: 37 },
         { id: '2', name: 'Иван Смирнов', date: '2024-03-16', value: 3 },
         { id: '3', name: 'Серега Сергеев', date: '2024-08-12', value: 75 },
@@ -45,6 +45,7 @@ const TableComponent: React.FC = () => {
                         type="text"
                         size="small"
                         danger
+                        onClick={() => handleDelete(record.id)}
                     />
                 </div>
             ),
@@ -57,6 +58,10 @@ const TableComponent: React.FC = () => {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+    };
+
+    const handleDelete = (id: string) => {
+        setData(prevData => prevData.filter(item => item.id !== id));
     };
 
     return (
