@@ -24,16 +24,19 @@ const TableComponent: React.FC = () => {
             title: 'Имя',
             dataIndex: 'name',
             key: 'name',
+            sorter: (a: TableItem, b: TableItem) => a.name.localeCompare(b.name),
         },
         {
             title: 'Дата',
             dataIndex: 'date',
             key: 'date',
+            sorter: (a: TableItem, b: TableItem) => new Date(a.date).getTime() - new Date(b.date).getTime(),
         },
         {
             title: 'Значение',
             dataIndex: 'value',
             key: 'value',
+            sorter: (a: TableItem, b: TableItem) => a.value - b.value,
         },
         {
             title: 'Действия',
