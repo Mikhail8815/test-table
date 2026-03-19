@@ -25,49 +25,6 @@ const TableComponent: React.FC = () => {
 
     const [form] = Form.useForm();
 
-
-    const columns = [
-        {
-            title: 'Имя',
-            dataIndex: 'name',
-            key: 'name',
-            sorter: (a: TableItem, b: TableItem) => a.name.localeCompare(b.name),
-        },
-        {
-            title: 'Дата',
-            dataIndex: 'date',
-            key: 'date',
-            sorter: (a: TableItem, b: TableItem) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-        },
-        {
-            title: 'Значение',
-            dataIndex: 'value',
-            key: 'value',
-            sorter: (a: TableItem, b: TableItem) => a.value - b.value,
-        },
-        {
-            title: 'Действия',
-            key: 'actions',
-            render: (_: unknown, record: TableItem) => (
-                <div>
-                    <Button
-                        icon={<EditOutlined />}
-                        type="text"
-                        size="small"
-                        onClick={() => handleEditClick(record)}
-                    />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        type="text"
-                        size="small"
-                        danger
-                        onClick={() => handleDelete(record.id)}
-                    />
-                </div>
-            ),
-        },
-    ];
-
     const closeModal = () => {
         setIsModalOpen(false);
         form.resetFields();
@@ -121,6 +78,55 @@ const TableComponent: React.FC = () => {
 
         closeModal()
     };
+
+    const sortByName = (a: TableItem, b: TableItem) => a.name.localeCompare(b.name);
+
+    const sortByDate = (a: TableItem, b: TableItem) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime();
+
+    const sortByValue = (a: TableItem, b: TableItem) => a.value - b.value;
+
+    const columns = [
+        {
+            title: 'Имя',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: sortByName,
+        },
+        {
+            title: 'Дата',
+            dataIndex: 'date',
+            key: 'date',
+            sorter: sortByDate,
+        },
+        {
+            title: 'Значение',
+            dataIndex: 'value',
+            key: 'value',
+            sorter: sortByValue,
+        },
+        {
+            title: 'Действия',
+            key: 'actions',
+            render: (_: unknown, record: TableItem) => (
+                <div>
+                    <Button
+                        icon={<EditOutlined />}
+                        type="text"
+                        size="small"
+                        onClick={() => handleEditClick(record)}
+                    />
+                    <Button
+                        icon={<DeleteOutlined />}
+                        type="text"
+                        size="small"
+                        danger
+                        onClick={() => handleDelete(record.id)}
+                    />
+                </div>
+            ),
+        },
+    ];
 
     const filteredData = useMemo(() => {
         if (!searchText) return data;
