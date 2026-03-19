@@ -1,8 +1,9 @@
 import React, {useMemo, useState} from 'react';
 import dayjs from 'dayjs';
-import type {TableItem, FormValues} from "../types.ts";
-import { EditOutlined, DeleteOutlined, PlusOutlined  } from '@ant-design/icons';
+import type {TableItem, FormValues} from "../../types.ts";
+import { PlusOutlined  } from '@ant-design/icons';
 import {Button, Table, Modal, Form, Input, DatePicker, InputNumber} from "antd";
+import ActionsCell from "../ActionsCell/ActionsCell.tsx";
 
 const TableComponent: React.FC = () => {
 
@@ -109,21 +110,11 @@ const TableComponent: React.FC = () => {
             title: 'Действия',
             key: 'actions',
             render: (_: unknown, record: TableItem) => (
-                <div>
-                    <Button
-                        icon={<EditOutlined />}
-                        type="text"
-                        size="small"
-                        onClick={() => handleEditClick(record)}
-                    />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        type="text"
-                        size="small"
-                        danger
-                        onClick={() => handleDelete(record.id)}
-                    />
-                </div>
+                <ActionsCell
+                    record={record}
+                    onEdit={handleEditClick}
+                    onDelete={handleDelete}
+                />
             ),
         },
     ];

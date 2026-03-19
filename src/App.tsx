@@ -1,4 +1,4 @@
-import TableComponent from "./components/TableComponent.tsx";
+import TableComponent from "./components/TableComponent/TableComponent.tsx";
 
 function App() {
 
