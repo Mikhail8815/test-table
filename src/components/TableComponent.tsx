@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import dayjs from 'dayjs';
-import type {TableItem} from "../types.ts";
+import type {TableItem, FormValues} from "../types.ts";
 import { EditOutlined, DeleteOutlined, PlusOutlined  } from '@ant-design/icons';
 import {Button, Table, Modal, Form, Input, DatePicker, InputNumber} from "antd";
 
@@ -83,7 +83,7 @@ const TableComponent: React.FC = () => {
         setIsModalOpen(true);
     };
 
-    const handleSave = (values: any) => {
+    const handleSave = (values: FormValues) => {
         const newItem = {
             name: values.name,
             date: values.date.format('YYYY-MM-DD'),
