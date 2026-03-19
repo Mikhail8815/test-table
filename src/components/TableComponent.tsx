@@ -16,6 +16,13 @@ const TableComponent: React.FC = () => {
 
     const [editingItem, setEditingItem] = useState<TableItem | null>(null);
 
+    const [searchText, setSearchText] = useState('');
+
+    const MODAL_TITLES = {
+        ADD: 'Добавить запись',
+        EDIT: 'Редактировать запись',
+    } as const;
+
     const [form] = Form.useForm();
 
 
@@ -115,6 +122,17 @@ const TableComponent: React.FC = () => {
         form.resetFields();
     };
 
+    const filteredData = data.filter(item => {
+        if (!searchText) return true;
+
+        const searchLower = searchText.toLowerCase();
+        return (
+            item.name.toLowerCase().includes(searchLower) ||
+            item.date.includes(searchLower) ||
+            String(item.value).includes(searchLower)
+        );
+    });
+
     return (
         <div >
             <h2>Таблица</h2>
@@ -125,14 +143,20 @@ const TableComponent: React.FC = () => {
             >
                 Добавить
             </Button>
+            <Input.Search
+                placeholder="Поиск по таблице..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                allowClear
+            />
             <Table
-                dataSource={data}
+                dataSource={filteredData}
                 columns={columns}
                 rowKey="id"
                 pagination={false}
             />
             <Modal
-                title={editingItem ? 'Редактировать запись' : 'Добавить запись'}
+                title={editingItem ? MODAL_TITLES.EDIT : MODAL_TITLES.ADD}
                 open={isModalOpen}
                 onCancel={handleCancel}
                 footer={[
