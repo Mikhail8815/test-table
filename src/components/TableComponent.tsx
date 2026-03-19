@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import dayjs from 'dayjs';
 import type {TableItem} from "../types.ts";
 import { EditOutlined, DeleteOutlined, PlusOutlined  } from '@ant-design/icons';
 import {Button, Table, Modal, Form, Input, DatePicker, InputNumber} from "antd";
@@ -76,10 +77,39 @@ const TableComponent: React.FC = () => {
         setEditingItem(record);
         form.setFieldsValue({
             name: record.name,
-            // date: record.date,
+            date: dayjs(record.date),
             value: record.value,
         });
         setIsModalOpen(true);
+    };
+
+    const handleSave = (values: any) => {
+        const newItem = {
+            name: values.name,
+            date: values.date.format('YYYY-MM-DD'),
+            value: values.value,
+        };
+
+        if (editingItem) {
+            setData(prev =>
+                prev.map(item =>
+                    item.id === editingItem.id
+                        ? { ...item, ...newItem }
+                        : item
+                )
+            );
+        } else {
+            setData(prev => [
+                ...prev,
+                {
+                    id: Date.now().toString(),
+                    ...newItem
+                }
+            ]);
+        }
+
+        setIsModalOpen(false);
+        form.resetFields();
     };
 
     return (
@@ -106,7 +136,7 @@ const TableComponent: React.FC = () => {
                     <Button key="cancel" onClick={handleCancel}>
                         Отмена
                     </Button>,
-                    <Button key="submit" type="primary">
+                    <Button key="submit" type="primary" onClick={() => form.submit()} >
                         Сохранить
                     </Button>,
                 ]}
@@ -114,6 +144,7 @@ const TableComponent: React.FC = () => {
                 <Form
                     form={form}
                     layout="vertical"
+                    onFinish={handleSave}
                 >
                     <Form.Item
                         label="Имя"
