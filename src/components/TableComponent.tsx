@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import dayjs from 'dayjs';
 import type {TableItem, FormValues} from "../types.ts";
 import { EditOutlined, DeleteOutlined, PlusOutlined  } from '@ant-design/icons';
@@ -68,14 +68,15 @@ const TableComponent: React.FC = () => {
         },
     ];
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+        form.resetFields();
+    };
+
     const handleAddClick = () => {
         setEditingItem(null);
         form.resetFields();
         setIsModalOpen(true);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     const handleDelete = (id: string) => {
@@ -118,20 +119,19 @@ const TableComponent: React.FC = () => {
             ]);
         }
 
-        setIsModalOpen(false);
-        form.resetFields();
+        closeModal()
     };
 
-    const filteredData = data.filter(item => {
-        if (!searchText) return true;
+    const filteredData = useMemo(() => {
+        if (!searchText) return data;
 
         const searchLower = searchText.toLowerCase();
-        return (
+        return data.filter(item =>
             item.name.toLowerCase().includes(searchLower) ||
             item.date.includes(searchLower) ||
             String(item.value).includes(searchLower)
         );
-    });
+    }, [data, searchText]);
 
     return (
         <div >
@@ -158,9 +158,9 @@ const TableComponent: React.FC = () => {
             <Modal
                 title={editingItem ? MODAL_TITLES.EDIT : MODAL_TITLES.ADD}
                 open={isModalOpen}
-                onCancel={handleCancel}
+                onCancel={closeModal}
                 footer={[
-                    <Button key="cancel" onClick={handleCancel}>
+                    <Button key="cancel" onClick={closeModal}>
                         Отмена
                     </Button>,
                     <Button key="submit" type="primary" onClick={() => form.submit()} >
