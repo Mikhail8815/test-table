@@ -27,6 +27,7 @@
 - **CSS Modules** — стилизация
 
 ## 🏗️ Структура проекта
+
 src/
 ├── App.tsx
 ├── main.tsx
@@ -42,10 +43,10 @@ src/
 │ │ ├── ItemForm.tsx
 │ │ └── ItemForm.module.css
 │ └── SearchAndAdd/
-│   ├── SearchAndAdd.tsx
-│   └── SearchAndAdd.module.css
+│ ├── SearchAndAdd.tsx
+│ └── SearchAndAdd.module.css
 └── hooks/
-    └── useTableData.ts
+└── useTableData.ts
 
 ## 🚀 Запуск проекта
 
@@ -66,6 +67,7 @@ npm run build
 ```
 
 ✨ Особенности
+
 Кастомный хук useTableData — вся бизнес-логика вынесена из компонента
 
 Debounce 500мс — поиск не дёргает таблицу при каждом символе
