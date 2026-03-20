@@ -1,9 +1,10 @@
 import React, {useMemo, useState} from 'react';
 import dayjs from 'dayjs';
 import type {TableItem, FormValues} from "../../types.ts";
-import { PlusOutlined  } from '@ant-design/icons';
-import {Button, Table, Modal, Form, Input, DatePicker, InputNumber} from "antd";
+import {Button, Table, Modal, Form} from "antd";
 import ActionsCell from "../ActionsCell/ActionsCell.tsx";
+import ItemForm from "../ItemForm/ItemForm.tsx";
+import SearchAndAdd from "../SearchAndAdd/SearchAndAdd.tsx";
 
 const TableComponent: React.FC = () => {
 
@@ -132,19 +133,10 @@ const TableComponent: React.FC = () => {
 
     return (
         <div >
-            <h2>Таблица</h2>
-            <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={handleAddClick}
-            >
-                Добавить
-            </Button>
-            <Input.Search
-                placeholder="Поиск по таблице..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                allowClear
+            <SearchAndAdd
+                onAdd={handleAddClick}
+                searchText={searchText}
+                onSearchChange={setSearchText}
             />
             <Table
                 dataSource={filteredData}
@@ -165,35 +157,7 @@ const TableComponent: React.FC = () => {
                     </Button>,
                 ]}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={handleSave}
-                >
-                    <Form.Item
-                        label="Имя"
-                        name="name"
-                        rules={[{ required: true, message: 'Введите имя' }]}
-                    >
-                        <Input placeholder="Введите имя" />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Дата"
-                        name="date"
-                        rules={[{ required: true, message: 'Выберите дату' }]}
-                    >
-                        <DatePicker style={{ width: '100%' }} />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Значение"
-                        name="value"
-                        rules={[{ required: true, message: 'Введите число' }]}
-                    >
-                        <InputNumber style={{ width: '100%' }} />
-                    </Form.Item>
-                </Form>
+                <ItemForm form={form} onFinish={handleSave} />
             </Modal>
         </div>
     );
