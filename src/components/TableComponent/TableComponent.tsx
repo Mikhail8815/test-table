@@ -5,6 +5,8 @@ import {Button, Table, Modal, Form} from "antd";
 import ActionsCell from "../ActionsCell/ActionsCell.tsx";
 import ItemForm from "../ItemForm/ItemForm.tsx";
 import SearchAndAdd from "../SearchAndAdd/SearchAndAdd.tsx";
+import styles from './TableComponent.module.css';
+
 
 const TableComponent: React.FC = () => {
 
@@ -131,19 +133,27 @@ const TableComponent: React.FC = () => {
         );
     }, [data, searchText]);
 
+    const getRowClassName = (_: unknown, index: number) => {
+        return index % 2 === 0 ? styles.rowEven : styles.rowOdd;
+    };
+
     return (
-        <div >
+        <div className={styles.container}>
             <SearchAndAdd
                 onAdd={handleAddClick}
                 searchText={searchText}
                 onSearchChange={setSearchText}
             />
-            <Table
-                dataSource={filteredData}
-                columns={columns}
-                rowKey="id"
-                pagination={false}
-            />
+         <div className={styles.tableWrapper}>
+             <Table
+                 dataSource={filteredData}
+                 columns={columns}
+                 rowKey="id"
+                 pagination={false}
+                 scroll={{ x: 'max-content' }}
+                 rowClassName={getRowClassName}
+             />
+         </div>
             <Modal
                 title={editingItem ? MODAL_TITLES.EDIT : MODAL_TITLES.ADD}
                 open={isModalOpen}

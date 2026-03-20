@@ -1,0 +1,12 @@
+.buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

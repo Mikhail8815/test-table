@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import styles from './SearchAndAdd.module.css';
 
 interface Props {
     onAdd: () => void;
@@ -10,11 +11,12 @@ interface Props {
 
 const SearchAndAdd: React.FC<Props> = ({ onAdd, searchText, onSearchChange }) => {
     return (
-        <div>
-            <h2>Управление записями</h2>
+        <div className={styles.wrapper}>
+            <h2 className={styles.title}>Управление записями</h2>
 
-            <div>
+            <div className={styles.controls}>
                 <Input.Search
+                    className={styles.searchInput}
                     placeholder="Поиск по таблице..."
                     value={searchText}
                     onChange={(e) => onSearchChange(e.target.value)}
@@ -22,6 +24,7 @@ const SearchAndAdd: React.FC<Props> = ({ onAdd, searchText, onSearchChange }) =>
                 />
 
                 <Button
+                    className={styles.addButton}
                     type="primary"
                     icon={<PlusOutlined />}
                     onClick={onAdd}

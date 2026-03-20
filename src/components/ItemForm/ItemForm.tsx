@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, DatePicker, InputNumber } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import type {FormValues} from "../../types.ts";
+import styles from './ItemForm.module.css';
 
 interface Props {
     form: FormInstance;
@@ -11,11 +12,13 @@ interface Props {
 const ItemForm: React.FC<Props> = ({ form, onFinish }) => {
     return (
         <Form
+            className={styles.form}
             form={form}
             layout="vertical"
             onFinish={onFinish}
         >
             <Form.Item
+                className={styles.formItem}
                 label="Имя"
                 name="name"
                 rules={[{ required: true, message: 'Введите имя' }]}
@@ -24,6 +27,7 @@ const ItemForm: React.FC<Props> = ({ form, onFinish }) => {
             </Form.Item>
 
             <Form.Item
+                className={styles.formItem}
                 label="Дата"
                 name="date"
                 rules={[{ required: true, message: 'Выберите дату' }]}
@@ -32,11 +36,12 @@ const ItemForm: React.FC<Props> = ({ form, onFinish }) => {
             </Form.Item>
 
             <Form.Item
+                className={styles.formItem}
                 label="Значение"
                 name="value"
                 rules={[{ required: true, message: 'Введите число' }]}
             >
-                <InputNumber style={{ width: '100%' }} />
+                <InputNumber className={styles.fullWidth} />
             </Form.Item>
         </Form>
     );

@@ -1,0 +1,30 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 32px;
+    }
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    margin-top: 24px;
+}
+.rowEven {
+    background-color: #ffffff;
+}
+
+.rowOdd {
+    background-color: #fafafa;
+}
+
+.rowEven:hover,
+.rowOdd:hover {
+    background-color: #e6f7ff !important;
+    transition: background-color 0.2s ease;
+}
+
