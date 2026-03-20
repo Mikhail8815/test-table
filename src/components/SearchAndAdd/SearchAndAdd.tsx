@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Button, Input, Spin} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import debounce from 'lodash/debounce';
@@ -14,13 +14,14 @@ const SearchAndAdd: React.FC<Props> = ({ onAdd, searchText, onSearchChange }) =>
     const [isSearching, setIsSearching] = useState(false);
     const [inputValue, setInputValue] = useState(searchText);
 
-    const debouncedSearch = useCallback(
-        debounce((value: string) => {
+    const debouncedSearch = useMemo(
+        () => debounce((value: string) => {
             onSearchChange(value);
             setIsSearching(false);
         }, 500),
         [onSearchChange]
     );
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
