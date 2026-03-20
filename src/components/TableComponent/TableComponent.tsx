@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import dayjs from 'dayjs';
 import type {TableItem, FormValues} from "../../types.ts";
-import {Button, Table, Modal, Form} from "antd";
+import {Button, Table, Modal, Form, message} from "antd";
 import ActionsCell from "../ActionsCell/ActionsCell.tsx";
 import ItemForm from "../ItemForm/ItemForm.tsx";
 import SearchAndAdd from "../SearchAndAdd/SearchAndAdd.tsx";
@@ -41,7 +41,17 @@ const TableComponent: React.FC = () => {
     };
 
     const handleDelete = (id: string) => {
-        setData(prevData => prevData.filter(item => item.id !== id));
+        Modal.confirm({
+            title: 'Подтверждение удаления',
+            content: 'Вы уверены, что хотите удалить эту запись?',
+            okText: 'Да, удалить',
+            cancelText: 'Отмена',
+            okType: 'danger',
+            onOk: () => {
+                setData(prevData => prevData.filter(item => item.id !== id));
+                message.success('Запись успешно удалена');
+            },
+        });
     };
 
     const handleEditClick = (record: TableItem) => {
@@ -70,6 +80,7 @@ const TableComponent: React.FC = () => {
                         : item
                 )
             );
+            message.success('Запись успешно обновлена');
         } else {
             setData(prev => [
                 ...prev,
@@ -78,6 +89,7 @@ const TableComponent: React.FC = () => {
                     ...newItem
                 }
             ]);
+            message.success('Запись успешно добавлена');
         }
 
         closeModal()
