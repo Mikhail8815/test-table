@@ -28,25 +28,27 @@
 
 ## 🏗️ Структура проекта
 
+<pre>
 src/
 ├── App.tsx
 ├── main.tsx
 ├── types.ts
 ├── components/
-│ ├── TableComponent/
-│ │ ├── TableComponent.tsx
-│ │ └── TableComponent.module.css
-│ ├── ActionsCell/
-│ │ ├── ActionsCell.tsx
-│ │ └── ActionsCell.module.css
-│ ├── ItemForm/
-│ │ ├── ItemForm.tsx
-│ │ └── ItemForm.module.css
-│ └── SearchAndAdd/
-│ ├── SearchAndAdd.tsx
-│ └── SearchAndAdd.module.css
+│   ├── TableComponent/
+│   │   ├── TableComponent.tsx
+│   │   └── TableComponent.module.css
+│   ├── ActionsCell/
+│   │   ├── ActionsCell.tsx
+│   │   └── ActionsCell.module.css
+│   ├── ItemForm/
+│   │   ├── ItemForm.tsx
+│   │   └── ItemForm.module.css
+│   └── SearchAndAdd/
+│       ├── SearchAndAdd.tsx
+│       └── SearchAndAdd.module.css
 └── hooks/
-└── useTableData.ts
+    └── useTableData.ts
+</pre>
 
 ## 🚀 Запуск проекта
 
